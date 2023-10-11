@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  color: #333;
+  font-size: 24px;
+}
+
+.template-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.template {
+  width: 30%;
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+p {
+  color: #666;
+}

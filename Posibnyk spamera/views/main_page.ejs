@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('head'); %>
+  </head>
+
+  <body class="d-flex justify-content-center flex-column align-items-center">
+    <h1>Посібник спамера</h1>
+    <a href="/send" class="btn btn-primary margins w-25">Надіслати</a>
+
+    <div class="template">
+      <h2>Вибраний текст</h2>
+      <p><%- currentTemplate.replace(/\n/g, '<br />') %></p>
+    </div>
+
+    <% if (message) { %>
+    <div class="alert alert-dismissible fade show alert-<%= message.type %>">
+      <button
+        class="btn btn-close"
+        type="button"
+        data-bs-dismiss="alert"
+        area-label="Close"
+      ></button>
+      <strong><%= message.message %></strong>
+    </div>
+    <% } %>
+
+    <div class="container">
+      <h1>Зміст листа</h1>
+      <div class="template-list">
+        <div class="template">
+          <h2>Шаблон 1</h2>
+          <textarea
+            class="d-flex my-2"
+            id="templateContent"
+            placeholder="Напишіть свій лист.."
+          ></textarea>
+          <a
+            id="chooseTemplateLink"
+            class="btn btn-primary"
+            type="button"
+            href="/choose-template/"
+          >
+            Вибрати
+          </a>
+        </div>
+        <% templates.forEach(function(template, index) { %>
+        <div class="template">
+          <h2>Шаблон <%= index+2 %></h2>
+          <p><%- template.text.replace(/\n/g, '<br />') %></p>
+          <a
+            class="btn btn-primary"
+            type="button"
+            href="/choose-template/<%= template.text %>"
+          >
+            Вибрати
+          </a>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <a class="nav-link fs-4" href="/add"
+      ><i class="fas fa-envelope me-1"></i>Додати</a
+    >
+    <br />
+
+    <% if (people != []) { %>
+    <div class="table-responsive w-100">
+      <table class="table table-striped text-center">
+        <thead>
+          <tr>
+            <th scope="col">Поштова адреса</th>
+            <th scope="col">ПІБ</th>
+            <th scope="col">Дія</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% people.forEach(function(person) { %>
+          <tr>
+            <td><%= person.email %></td>
+            <td>
+              <%= person.surname %> <%= person.name %> <%= person.patronymic %>
+            </td>
+            <td>
+              <a href="/edit/<%= person._id %>" class="text-success"
+                ><i class="fas fa-edit fa-lg mx-1"></i
+              ></a>
+              <a href="/delete/<%= person._id %>" class="text-danger"
+                ><i class="fas fa-trash fa-lg mx-1"></i
+              ></a>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+    <% } else { %>
+    <h1 class="text-center text-secondary mt-5">Немає пошт у базі даних</h1>
+    <% } %>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"
+      integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      const textarea = document.getElementById("templateContent");
+      const link = document.getElementById("chooseTemplateLink");
+
+      textarea.addEventListener("input", function () {
+        const textareaValue = textarea.value;
+        const encodedValue = encodeURIComponent(textareaValue);
+        link.setAttribute("href", `/choose-template/${encodedValue}`);
+      });
+    </script>
+  </body>
+</html>

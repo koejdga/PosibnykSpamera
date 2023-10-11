@@ -1,0 +1,39 @@
+GET http://localhost:3030/subscribers
+###
+POST http://localhost:3030/subscribers
+Content-Type: application/json
+
+{
+    "name": "Sofiia",
+    "surname": "B",
+    "email": "avoli@gmail.com"
+}
+###
+PUT http://localhost:3030/subscribers/6525e307113c402daa91efc0
+Content-Type: application/json
+
+{
+    "name": "Dariia",
+    "surname": "B",
+    "email": "avoli@gmail.com"
+}
+###
+DELETE http://localhost:3030/subscribers/6525d3051ae10574881533cb
+###
+GET http://localhost:3030/letter-templates
+###
+POST http://localhost:3030/letter-templates
+Content-Type: application/json
+
+{
+    "text": "hellorld"
+}
+###
+DELETE http://localhost:3030/letter-templates/6525d3051ae10574881533cb
+Content-Type: application/json
+
+{
+    "text": "hellorld"
+}
+###
+GET http://localhost:3030/choose-template/
