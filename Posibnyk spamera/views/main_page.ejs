@@ -13,17 +13,7 @@
       <p><%- currentTemplate.replace(/\n/g, '<br />') %></p>
     </div>
 
-    <% if (message) { %>
-    <div class="alert alert-dismissible fade show alert-<%= message.type %>">
-      <button
-        class="btn btn-close"
-        type="button"
-        data-bs-dismiss="alert"
-        area-label="Close"
-      ></button>
-      <strong><%= message.message %></strong>
-    </div>
-    <% } %>
+    <%- include('message'); %>
 
     <div class="container">
       <h1>Зміст листа</h1>

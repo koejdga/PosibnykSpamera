@@ -31,6 +31,7 @@ const LetterTemplate = require("./models/letterTemplate");
 app.use(express.urlencoded({ extended: true }));
 
 const sendLetter = require("./send_letter");
+const validateEmail = require("./validation");
 
 //#endregion
 
@@ -81,6 +82,15 @@ app.post("/add", async (req, res) => {
   });
 
   try {
+    if (!validateEmail(subscriber.email)) {
+      message = {
+        message: "Неправильний формат електронної адреси",
+        type: "danger",
+      };
+      res.redirect("/add");
+      return;
+    }
+
     const alreadyExisting = await Subscriber.find({ email: subscriber.email });
     if (alreadyExisting.length > 0) {
       message = { message: "Ця пошта вже є в базі даних", type: "warning" };
@@ -97,17 +107,28 @@ app.post("/add", async (req, res) => {
 app.post("/update/:id", async (req, res) => {
   let id = req.params.id;
   try {
-    let s = {
+    let subscriber = {
       name: req.body.name,
       surname: req.body.surname,
       patronymic: req.body.patronymic,
       email: req.body.email,
     };
-    await Subscriber.findByIdAndUpdate(id, s, { new: true });
+
+    if (!validateEmail(subscriber.email)) {
+      message = {
+        message: "Неправильний формат електронної адреси",
+        type: "danger",
+      };
+      res.redirect("/");
+      return;
+    }
+
+    await Subscriber.findByIdAndUpdate(id, subscriber, { new: true });
     message = { message: "Пошту оновлено успішно", type: "success" };
     res.redirect("/");
   } catch (error) {
     message = { message: error.message, type: "danger" };
+    res.redirect("/");
   }
 });
 
