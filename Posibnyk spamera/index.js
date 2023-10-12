@@ -24,13 +24,9 @@ app.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist/"));
 app.use(express.static(__dirname));
 app.use(express.json());
 
-const subsribersRouter = require("./routes/subscribers");
 const Subscriber = require("./models/subscriber");
-app.use("/subscribers", subsribersRouter);
 
-const letterTemplatesRouter = require("./routes/letter-templates");
 const LetterTemplate = require("./models/letterTemplate");
-app.use("/letter-templates", letterTemplatesRouter);
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,7 +43,6 @@ app.get("/", async (req, res) => {
     subscribers = await Subscriber.find().sort({ email: 1 }).exec();
     const letterTemplates = await LetterTemplate.find().exec();
 
-    console.log(currentTemplate + " in main / function");
     res.render("main_page", {
       people: subscribers,
       templates: letterTemplates,
@@ -134,7 +129,6 @@ app.get("/cancel", (req, res) => {
 });
 
 app.get("/send", (req, res) => {
-  console.log(currentTemplate + " in send function 1");
   if (currentTemplate != "") {
     subscribers.forEach(async (subscriber) => {
       try {
@@ -151,7 +145,6 @@ app.get("/send", (req, res) => {
   } else {
     message = { message: "Виберіть шаблон", type: "danger" };
   }
-  console.log(currentTemplate + " in send function 2");
   res.redirect("/");
 });
 

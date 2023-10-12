@@ -2,8 +2,6 @@ fs = require("fs");
 
 let info = fs.readFileSync("config.json");
 let obj = JSON.parse(info);
-console.log(obj.user);
-console.log(obj.pass);
 
 let nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
